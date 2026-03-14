@@ -29,10 +29,24 @@ const dates = [
   { date: "05.19", city: "New York", venue: "Midnight Riviera" },
 ] as const;
 
+const mysteryMessages = [
+  "The screen whispers secrets only the lost can hear.",
+  "Between frames, the real story unfolds.",
+  "Every shadow hides a spotlight waiting to ignite.",
+  "The curtain falls, but the echo remains.",
+  "In the dark, the light finds its voice.",
+] as const;
+
 export default function Home() {
-  const [selectedTrack, setSelectedTrack] = useState<(typeof tracks)[number]["title"]>(
-    tracks[0].title,
+  const [selectedTrack, setSelectedTrack] = useState<(typeof tracks)[number]>(
+    tracks[0],
   );
+  const [mysteryMessage, setMysteryMessage] = useState<string>("");
+
+  const revealMystery = () => {
+    const randomIndex = Math.floor(Math.random() * mysteryMessages.length);
+    setMysteryMessage(mysteryMessages[randomIndex]);
+  };
 
   return (
     <main className="page-shell">
@@ -94,8 +108,8 @@ export default function Home() {
             <div className="orbital-rings" />
             <article className="poster poster-main">
               <p className="poster-kicker">Now showing</p>
-              <h2>PHANTOM THEATER</h2>
-              <p>New single humming through the dark.</p>
+              <h2>{selectedTrack.title.toUpperCase()}</h2>
+              <p>{selectedTrack.meta}</p>
             </article>
             <article className="poster poster-side poster-left">
               <p>Late show</p>
@@ -132,14 +146,14 @@ export default function Home() {
 
         <div className="track-grid">
           {tracks.map((track) => {
-            const isActive = selectedTrack === track.title;
+            const isActive = selectedTrack.id === track.id;
 
             return (
               <button
                 key={track.id}
                 className={`track-card${isActive ? " is-active" : ""}`}
                 type="button"
-                onClick={() => setSelectedTrack(track.title)}
+                onClick={() => setSelectedTrack(track)}
               >
                 <span className="track-index">{track.index}</span>
                 <span className="track-title">{track.title}</span>
@@ -150,7 +164,7 @@ export default function Home() {
         </div>
 
         <p className="signal-readout">
-          Selected transmission: <span id="signal-output">{selectedTrack}</span>
+          Selected transmission: <span id="signal-output">{selectedTrack.title}</span>
         </p>
       </section>
 
@@ -169,6 +183,25 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="panel panel-mystery">
+        <div className="panel-heading">
+          <p className="section-label">Mystery</p>
+          <h2>Decode the hidden signal.</h2>
+        </div>
+
+        <div className="cta-row">
+          <button className="button primary" onClick={revealMystery}>
+            Reveal Mystery
+          </button>
+        </div>
+
+        {mysteryMessage && (
+          <p className="lede" style={{ marginTop: "20px", fontStyle: "italic" }}>
+            {mysteryMessage}
+          </p>
+        )}
       </section>
     </main>
   );

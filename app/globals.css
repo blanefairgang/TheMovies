@@ -248,6 +248,7 @@ button {
   box-shadow:
     0 0 0 42px rgba(243, 233, 221, 0.04),
     0 0 0 84px rgba(243, 233, 221, 0.03);
+  animation: rotate 20s linear infinite;
 }
 
 .poster {
@@ -436,6 +437,15 @@ button {
   50% {
     opacity: 1;
     transform: translateX(-10px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 

@@ -1,26 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Movies</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="grain"></div>
-    <div class="spotlight spotlight-left"></div>
-    <div class="spotlight spotlight-right"></div>
+"use client";
 
-    <main class="page-shell">
-      <section class="hero">
-        <div class="marquee marquee-top">
-          <div class="marquee-track">
+import { useState } from "react";
+
+const tracks = [
+  {
+    id: "phantom-theater",
+    index: "01",
+    title: "Phantom Theater",
+    meta: "Smoke, synth, headlights",
+  },
+  {
+    id: "no-exit-songs",
+    index: "02",
+    title: "No Exit Songs",
+    meta: "Pulse, glass, motel signs",
+  },
+  {
+    id: "silver-static",
+    index: "03",
+    title: "Silver Static",
+    meta: "Slow burn, tape hiss, moonlight",
+  },
+] as const;
+
+const dates = [
+  { date: "04.18", city: "Los Angeles", venue: "The Velvet Exit" },
+  { date: "05.02", city: "Chicago", venue: "Afterlight Hall" },
+  { date: "05.19", city: "New York", venue: "Midnight Riviera" },
+] as const;
+
+export default function Home() {
+  const [selectedTrack, setSelectedTrack] = useState<(typeof tracks)[number]["title"]>(
+    tracks[0].title,
+  );
+
+  return (
+    <main className="page-shell">
+      <div className="grain" />
+      <div className="spotlight spotlight-left" />
+      <div className="spotlight spotlight-right" />
+
+      <section className="hero">
+        <div className="marquee marquee-top" aria-hidden="true">
+          <div className="marquee-track">
             <span>Midnight previews</span>
             <span>Velvet feedback</span>
             <span>Static romance</span>
@@ -32,21 +54,27 @@
           </div>
         </div>
 
-        <div class="hero-grid">
-          <div class="copy">
-            <p class="eyebrow">New transmission from the screen-lit underground</p>
+        <div className="hero-grid">
+          <div className="copy">
+            <p className="eyebrow">
+              New transmission from the screen-lit underground
+            </p>
             <h1>The Movies</h1>
-            <p class="lede">
+            <p className="lede">
               A fever-dream band drifting between neon noir, motel pop, and the
               last song playing after the credits roll.
             </p>
 
-            <div class="cta-row">
-              <a class="button primary" href="#listen">Enter the haze</a>
-              <a class="button secondary" href="#dates">See the next screening</a>
+            <div className="cta-row">
+              <a className="button primary" href="#listen">
+                Enter the haze
+              </a>
+              <a className="button secondary" href="#dates">
+                See the next screening
+              </a>
             </div>
 
-            <dl class="facts">
+            <dl className="facts">
               <div>
                 <dt>Latest signal</dt>
                 <dd>Phantom Theater</dd>
@@ -62,32 +90,32 @@
             </dl>
           </div>
 
-          <div class="visual-stage" aria-hidden="true">
-            <div class="orbital-rings"></div>
-            <article class="poster poster-main">
-              <p class="poster-kicker">Now showing</p>
+          <div className="visual-stage" aria-hidden="true">
+            <div className="orbital-rings" />
+            <article className="poster poster-main">
+              <p className="poster-kicker">Now showing</p>
               <h2>PHANTOM THEATER</h2>
               <p>New single humming through the dark.</p>
             </article>
-            <article class="poster poster-side poster-left">
+            <article className="poster poster-side poster-left">
               <p>Late show</p>
               <strong>THE MOVIES</strong>
             </article>
-            <article class="poster poster-side poster-right">
+            <article className="poster poster-side poster-right">
               <p>Broadcast 02</p>
               <strong>NO EXIT SONGS</strong>
             </article>
-            <div class="pulse-lines">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
+            <div className="pulse-lines">
+              <span />
+              <span />
+              <span />
+              <span />
             </div>
           </div>
         </div>
 
-        <div class="marquee marquee-bottom">
-          <div class="marquee-track reverse">
+        <div className="marquee marquee-bottom" aria-hidden="true">
+          <div className="marquee-track reverse">
             <span>The screen never goes black</span>
             <span>The screen never goes black</span>
             <span>The screen never goes black</span>
@@ -96,62 +124,52 @@
         </div>
       </section>
 
-      <section class="panel panel-listen" id="listen">
-        <div class="panel-heading">
-          <p class="section-label">Listen</p>
+      <section className="panel panel-listen" id="listen">
+        <div className="panel-heading">
+          <p className="section-label">Listen</p>
           <h2>Three tracks leaked from somewhere behind the curtain.</h2>
         </div>
 
-        <div class="track-grid">
-          <button class="track-card is-active" type="button" data-track="Phantom Theater">
-            <span class="track-index">01</span>
-            <span class="track-title">Phantom Theater</span>
-            <span class="track-meta">Smoke, synth, headlights</span>
-          </button>
-          <button class="track-card" type="button" data-track="No Exit Songs">
-            <span class="track-index">02</span>
-            <span class="track-title">No Exit Songs</span>
-            <span class="track-meta">Pulse, glass, motel signs</span>
-          </button>
-          <button class="track-card" type="button" data-track="Silver Static">
-            <span class="track-index">03</span>
-            <span class="track-title">Silver Static</span>
-            <span class="track-meta">Slow burn, tape hiss, moonlight</span>
-          </button>
+        <div className="track-grid">
+          {tracks.map((track) => {
+            const isActive = selectedTrack === track.title;
+
+            return (
+              <button
+                key={track.id}
+                className={`track-card${isActive ? " is-active" : ""}`}
+                type="button"
+                onClick={() => setSelectedTrack(track.title)}
+              >
+                <span className="track-index">{track.index}</span>
+                <span className="track-title">{track.title}</span>
+                <span className="track-meta">{track.meta}</span>
+              </button>
+            );
+          })}
         </div>
 
-        <p class="signal-readout">
-          Selected transmission:
-          <span id="signal-output">Phantom Theater</span>
+        <p className="signal-readout">
+          Selected transmission: <span id="signal-output">{selectedTrack}</span>
         </p>
       </section>
 
-      <section class="panel panel-dates" id="dates">
-        <div class="panel-heading">
-          <p class="section-label">Dates</p>
+      <section className="panel panel-dates" id="dates">
+        <div className="panel-heading">
+          <p className="section-label">Dates</p>
           <h2>Upcoming appearances, subject to weather and disappearances.</h2>
         </div>
 
-        <div class="dates-list">
-          <div class="date-row">
-            <span>04.18</span>
-            <strong>Los Angeles</strong>
-            <em>The Velvet Exit</em>
-          </div>
-          <div class="date-row">
-            <span>05.02</span>
-            <strong>Chicago</strong>
-            <em>Afterlight Hall</em>
-          </div>
-          <div class="date-row">
-            <span>05.19</span>
-            <strong>New York</strong>
-            <em>Midnight Riviera</em>
-          </div>
+        <div className="dates-list">
+          {dates.map((show) => (
+            <div className="date-row" key={`${show.date}-${show.city}`}>
+              <span>{show.date}</span>
+              <strong>{show.city}</strong>
+              <em>{show.venue}</em>
+            </div>
+          ))}
         </div>
       </section>
     </main>
-
-    <script src="script.js"></script>
-  </body>
-</html>
+  );
+}
